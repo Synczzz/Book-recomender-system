@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Book Recommender System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            min-height: 100vh;
+            padding-bottom: 3rem;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1f2937;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #a0d8ef !important;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand:hover,
+        .nav-link:hover {
+            color: #ffd700 !important;
+        }
+
+        /* Page title */
+        h1 {
+            color: #f0a500;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Book cards grid */
+        .book-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+
+        /* Individual book card */
+        .book-card {
+            background-color: #222;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(255, 215, 0, 0.6);
+        }
+
+        /* Book cover image */
+        .book-card img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Book title */
+        .book-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.3rem;
+            min-height: 2.6rem;
+            /* two lines height approx */
+        }
+
+        /* Book author */
+        .book-author {
+            font-size: 0.9rem;
+            font-style: italic;
+            color: #bbb;
+            margin-bottom: 0.6rem;
+            min-height: 1.4rem;
+        }
+
+        /* Votes and rating */
+        .book-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: #ccc;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-stats i {
+            color: #ffd700;
+            margin-right: 0.25rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .book-card img {
+                width: 120px;
+                height: 160px;
+            }
+
+            .book-title {
+                font-size: 1rem;
+            }
+
+            .book-author {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">My Book Recommender</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/recommend">Recommend</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h1>Top 50 Books</h1>
+
+    <div class="book-grid">
+        {% for i in range(book_name|length) %}
+        <div class="book-card" tabindex="0" role="article" aria-label="{{ book_name[i] }} by {{ author[i] }}">
+            <img src="{{ image[i] }}" alt="Cover of {{ book_name[i] }}" loading="lazy" />
+            <div class="book-title" title="{{ book_name[i] }}">{{ book_name[i] }}</div>
+            <div class="book-author" title="Author: {{ author[i] }}">by {{ author[i] }}</div>
+            <div class="book-stats">
+                <div><i class="fas fa-thumbs-up"></i> {{ votes[i] }}</div>
+                <div><i class="fas fa-star"></i> {{ rating[i] }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

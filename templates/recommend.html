@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book Recommender | Get Suggestions</title>
+
+  <!-- Google Fonts: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding-bottom: 3rem;
+    }
+
+    .navbar {
+      background-color: #00b894;
+    }
+
+    .navbar-brand, .nav-link {
+      color: #fff !important;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-brand:hover, .nav-link:hover {
+      color: #d4f1f9 !important;
+    }
+
+    .form-container {
+      margin-top: 100px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-weight: 700;
+      margin-bottom: 2rem;
+      text-align: center;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    }
+
+    form {
+      margin-bottom: 3rem;
+    }
+
+    .recommend-card {
+      background-color: #2d3436;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .recommend-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    }
+
+    .recommend-card img {
+      width: 150px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+      flex-shrink: 0;
+    }
+
+    .recommend-card h5 {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #f0a500;
+      min-height: 3rem; /* reserve space for title */
+    }
+
+    .recommend-card p {
+      font-style: italic;
+      color: #ccc;
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 576px) {
+      .recommend-card img {
+        width: 120px;
+        height: 180px;
+      }
+      .recommend-card h5 {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">My Book Recommender</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="/recommend" class="nav-link active">Recommend</a></li>
+          <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container form-container">
+    <h1>🔍 Find Your Next Favorite Book 🔍</h1>
+
+    <form action="/recommend_books" method="post" class="d-flex justify-content-center" role="search" aria-label="Book recommendation form">
+      <input 
+        type="text" 
+        name="user_input" 
+        placeholder="Enter a Book Name" 
+        class="form-control w-50 me-2" 
+        required 
+        aria-required="true"
+        aria-describedby="inputHelp"
+      />
+      <button type="submit" class="btn btn-success">Recommend</button>
+    </form>
+
+    {% if data %}
+    <div class="row">
+      {% for book in data %}
+      <div class="col-md-3 col-sm-6 d-flex">
+        <div class="recommend-card" tabindex="0" role="article" aria-label="{{ book[0] }} by {{ book[1] }}">
+          <img src="{{ book[2] }}" alt="Cover image of {{ book[0] }}" loading="lazy" />
+          <h5>{{ book[0] }}</h5>
+          <p>{{ book[1] }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+      <p class="text-center text-muted mt-5">No recommendations to show. Please enter a book name above.</p>
+    {% endif %}
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
